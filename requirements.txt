@@ -1,4 +1,3 @@
 requests~=2.23.0
 beautifulsoup4~=4.9.3
 lxml~=4.5.1
-/var/lang/python3/bin/python3 -m pip install -r requirements.txt -t .
