@@ -1,16 +1,16 @@
 ## ISP-CDU 疫情打卡自动化工具
 
-### ISP-CDU简介
+### 1. ISP-CDU简介
 
 `isp-cdu`为成都大学ISP系统学生端疫情打卡自动化工具。结合腾讯云函数实现`每天定时打卡`。每天的打卡情况会在打开完成后最后推送到你的微信，实时反馈每日打卡情况。无需人工操作。==特别提醒==：请保证在使用本工具的前一天，你自己在isp系统上进行过疫情打卡，`isp-cdu`只会同步前一天的登记信息。若不满足该条件请手动登录isp系统打卡后再使用本项目。
 
 作者：`ahao`。
 
-### 发布初心
+### 2. 发布初心
 
 `让ISP疫情打卡不再烦扰每一位小橙子`
 
-### 注意事项
+### 3. 注意事项
 
 ① 本脚本完全免费，如果您通过其他渠道消费购买，请一定口吐芬芳对方！！！
 
@@ -32,15 +32,15 @@
 
 ## 主要功能
 
-### 自动登录CDU-ISP系统
+### 1. 自动登录CDU-ISP系统
 
-### 自动进行疫情信息打卡
+### 2. 自动进行疫情信息打卡
 
 
 
 ## 使用教程（小白版）
 
-### 下载项目代码
+### 1. 下载项目代码
 
 进入本项目代码仓下载ZIP压缩包到本地，并解压到桌面。
 
@@ -48,19 +48,19 @@
 
 <img src="https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208221635.png" alt="image-20210208221635404" style="zoom:50%;" /> 
 
-### 进入云函数
+### 2. 进入云函数
 
 腾讯云函数免费开通地址，地址：https://console.cloud.tencent.com/scf/list-create?rid=1&ns=default
 
 登录以后按照流程自行开通。
 
-### 新建函数
+### 3. 新建函数
 
 函数名称随意，运行环境选**Python 3.6**，创建方式选择==自定义创建==
 
 <img src="https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208220551.png" alt="image-20210208220544755" style="zoom:50%;" />
 
-### 上传代码
+### 4. 上传代码
 
 确保环境为**python 3.6**，执行方法改为：`index.main`，提交方式一定要选本==地上传文件夹==，然后选择解压到桌面的文件夹==isp-cdu-master==，然后点击这个上传把文件夹上传进来。
 
@@ -70,13 +70,13 @@
 
 <img src="https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208222031.png" alt="image-20210208222031676" style="zoom:50%;" />
 
-### 高级配置
+### 5. 高级配置
 
 内存用不了太大，**64MB**就够了，超时时间改为最大的**900秒**，然后点击最下面的完成。
 
 <img src="https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208222509.png" alt="image-20210208222509238" style="zoom:50%;" />
 
-### 安装依赖
+### 6. 安装依赖
 
 点击终端，然后选择新终端，显示终端窗口，在终端窗口里面输入：
 
@@ -88,7 +88,7 @@ cd src/ && /var/lang/python3/bin/python3 -m pip install -r requirements.txt -t .
 
 输入命令后回车执行，等待安装完成。大概1分钟左右。
 
-### 配置账号
+### 7. 配置账号
 
 自己改下`init.config`里的`账号密码`以及`Server酱密匙`，更改完后点击保存，部署并测试。如果你的配置没有错，稍等几分钟便可以看到结果，在此期间不要刷新页面。结果会在执行日志里。 
 
@@ -98,7 +98,7 @@ cd src/ && /var/lang/python3/bin/python3 -m pip install -r requirements.txt -t .
 
 ![image-20210208224125911](https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208230157.png)
 
-### 设置定时
+### 8. 设置定时
 
 新建触发器，触发周期为自定义，表达式就是每天的什么时候做任务，我选择的早上8点30分，可以自行修改，填好后点击提交即可，到此你的ISP-CDU疫情自动打卡项目便部署完成，感谢使用！！
 
@@ -122,7 +122,7 @@ pip3 install -r requirements -i https://pypi.tuna.tsinghua.edu.cn/simple/
 
 ## 打赏作者
 
-​                               <img src="https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208230341.png" alt="image-20210208230341041" style="zoom: 50%;" />           <img src="https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208230404.png" alt="image-20210208230404796" style="zoom: 10%;" />  
+​                               <img src="https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208230341.png" alt="image-20210208230341041" style="width:150px;height:150px" />           <img src="https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208230404.png" alt="image-20210208230404796" style="width:150px;height:150px" />  
 
 金额不论大小。一分也是爱。
 
