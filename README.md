@@ -84,7 +84,7 @@
 cd src/ && /var/lang/python3/bin/python3 -m pip install -r requirements.txt -t .
 ```
 
-![image-20210208223921155](C:\Users\ahao\AppData\Roaming\Typora\typora-user-images\image-20210208223921155.png)
+![image-20210208223921155](https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208231109.png)
 
 输入命令后回车执行，等待安装完成。大概1分钟左右。
 
