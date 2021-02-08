@@ -122,7 +122,7 @@ pip3 install -r requirements -i https://pypi.tuna.tsinghua.edu.cn/simple/
 
 ## 打赏作者
 
-​                               <img src="https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208230341.png" alt="image-20210208230341041" style="zoom: 67%;" />           <img src="https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208230404.png" alt="image-20210208230404796" style="zoom: 33%;" />  
+​                               <img src="https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208230341.png" alt="image-20210208230341041" style="zoom: 50%;" />           <img src="https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208230404.png" alt="image-20210208230404796" style="zoom: 25%;" />  
 
 金额不论大小。一分也是爱。
 
