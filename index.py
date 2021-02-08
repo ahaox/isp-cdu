@@ -2,10 +2,6 @@
 # -*- coding:utf-8 -*-
 # Author: ahao
 # Time: 2021/2/7 22:42
-#!/usr/bin/python3
-# -*- coding:utf-8 -*-
-# Author: ahao
-# Time: 2021/2/7 22:42
 import datetime
 import json
 import os
