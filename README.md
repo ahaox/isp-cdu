@@ -1,4 +1,4 @@
-## ISP-CDU 疫情打卡自动化工具
+## 一、ISP-CDU 疫情打卡自动化工具
 
 ### 1. ISP-CDU简介
 
@@ -30,7 +30,7 @@
 
 
 
-## 主要功能
+## 二、主要功能
 
 ### 1. 自动登录CDU-ISP系统
 
@@ -38,7 +38,7 @@
 
 
 
-## 使用教程（小白版）
+## 三、使用教程（小白版）
 
 ### 1. 下载项目代码
 
@@ -106,7 +106,7 @@ cd src/ && /var/lang/python3/bin/python3 -m pip install -r requirements.txt -t .
 
 
 
-## 使用教程（专业人士）
+## 四、使用教程（专业人士）
 
 专业人士是指：有过python开发的胖友们。
 
@@ -120,9 +120,9 @@ pip3 install -r requirements -i https://pypi.tuna.tsinghua.edu.cn/simple/
 
 
 
-## 打赏作者
+## 五、打赏作者
 
 ![pay](https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208232946.png "在这里输入图片标题")
 
-金额不论大小。一分也是爱。
+==金额不论大小。一分也是爱。==
 
