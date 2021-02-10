@@ -4,7 +4,6 @@
 # Time: 2021/2/7 22:42
 import datetime
 import json
-import os
 from configparser import ConfigParser
 import logging
 from bs4 import BeautifulSoup
@@ -76,6 +75,7 @@ class IspService:
         }
         try:
             # 获取登录前的cookie
+            # allow_redirects=False 禁止重定向， verify=false 关闭https验证
             resp = requests.get(url=url, headers=req1_headers, allow_redirects=False, verify=False)
             req1_cookie = resp.headers['Set-Cookie'].split(';')[0]
             self.headers['Cookie'] = req1_cookie
