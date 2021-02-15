@@ -2,7 +2,11 @@
 
 ### 1. ISP-CDU简介
 
-`isp-cdu`为成都大学ISP系统学生端疫情打卡自动化工具。结合腾讯云函数实现`每天定时打卡`。每天的打卡情况会在打卡完成后最后推送到你的微信，实时反馈每日打卡情况。无需人工操作。 **特别提醒** ：请保证在使用本工具的前一天，你自己在isp系统上进行过疫情打卡，`isp-cdu`只会同步前一天的登记信息。若不满足该条件请手动登录isp系统打卡后再使用本项目。
+`isp-cdu`为成都大学ISP系统学生端疫情打卡自动化工具，支持单账号和多账号自动打卡。结合腾讯云函数实现`每天定时打卡`。每天的打卡情况会在打卡完成后最后推送到你的微信，实时反馈每日打卡情况。无需人工操作。 **特别提醒** ：请保证在使用本工具的前一天，你自己在isp系统上进行过疫情打卡，`isp-cdu`只会同步前一天的登记信息。若不满足该条件请手动登录isp系统打卡后再使用本项目。
+
+**master**分支为单账号模式，**multiplayer**分支支持单账号或者多账号模式。
+
+建议使用**multiplayer**分支。
 
 GitHub链接： https://github.com/ahaox/isp-cdu
 
@@ -10,11 +14,15 @@ Gitee链接： https://gitee.com/ahaox/isp-cdu
 
 作者：`ahao`。
 
-### 2. 发布初心
+### 2. 更新日志
+
+##### 增加多账号自动打卡（2021.2.15）分支  multiplayer 
+
+### 3. 发布初心
 
 `让ISP疫情打卡不再烦扰每一位小橙子`
 
-### 3. 注意事项
+### 4. 注意事项
 
 ① 本脚本完全免费，如果您通过其他渠道消费购买，请一定口吐芬芳对方！！！
 
@@ -39,6 +47,8 @@ Gitee链接： https://gitee.com/ahaox/isp-cdu
 ### 1. 自动登录CDU-ISP系统
 
 ### 2. 自动进行疫情信息打卡
+
+### 3. 支持多账号同时打卡
 
 
 
@@ -94,11 +104,23 @@ cd src/ && /var/lang/python3/bin/python3 -m pip install -r requirements.txt -t .
 
 ### 7. 配置账号
 
-自己改下`init.config`里的`账号密码`以及`Server酱密匙`，更改完后点击保存，部署并测试。如果你的配置没有错，稍等几分钟便可以看到结果，在此期间不要刷新页面。结果会在执行日志里。 
+自己改下`config.ini`里的`账号密码`以及`Server酱密匙`，更改完后点击保存，部署并测试。如果你的配置没有错，稍等几分钟便可以看到结果，在此期间不要刷新页面。结果会在执行日志里。 
+
+**如果使用的是多账号版本，需要在`config.ini`配置文件中设置 `peopleSwitch = true`** ，并在`account.json` 中分别配置账号密码以及Server酱密匙。
 
 **Server酱密匙** 用于微信推送打卡情况，需要自己申请，申请地址： http://sc.ftqq.com/
 
+* 单账号的配置
+
 ![image-20210208222917450](https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208222917.png)
+
+* 多账号的配置
+
+![image-20210215144013354](https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210215144013.png)
+
+![image-20210215144110490](https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210215144110.png)
+
+部署
 
 ![image-20210208224125911](https://cdn.jsdelivr.net/gh/ahaox/pictures/image20210208230157.png)
 
