@@ -14,27 +14,21 @@ import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
-logFile = open("run.log", encoding="utf-8", mode="a")
-logging.basicConfig(stream=logFile, format="%(asctime)s %(levelname)s:%(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=logging.INFO)
-
 
 class IspService:
     """
     isp疫情信息登记服务类
     """
-    def __init__(self):
-        self.list = []
-        self.title = None
-        self.error = None
-        self.content = None
-        self.time = None
+    def __init__(self, username, userpwd, sckey):
+        self.username = username
+        self.userpwd = userpwd
+        self.sckey = sckey
+        self.error = ''
         self.logger = logging.getLogger()
         # 装载数据
-        self.conf = self.getConfig()
         self.data = {
-            'username': self.conf.get('username'),
-            'userpwd': self.conf.get('userpwd'),
+            'username': self.username,
+            'userpwd': self.userpwd,
             'code': '',
             'login': 'login',
             'checkcode': '1',
@@ -97,11 +91,12 @@ class IspService:
             self.headers['Cookie'] = req2_cookie
             self.headers['Referer'] = 'https://xsswzx.cdu.edu.cn/ispstu/com_user/webindex.asp'
             self.headers['Cache-Control'] = 'max-age=0'
+            self.log('获取Cookie成功')
+            logging.info(' 获取Cookie成功')
         except:
-            self.log('- 获取Cookie失败')
-            logging.info('获取Cookie失败')
-        self.log('- 获取Cookie成功')
-        logging.info(' - 获取Cookie成功')
+            self.error = '获取Cookie失败'
+            self.log('获取Cookie失败')
+            logging.info(' 获取Cookie失败')
 
     def getClockPageUrl(self):
         """
@@ -118,14 +113,13 @@ class IspService:
         resp.encoding = 'utf-8'
         soup = BeautifulSoup(resp.text, 'lxml')
         clickPageUrl = 'https://xsswzx.cdu.edu.cn/ispstu/com_user/' + soup.find('a', string="疫情信息登记")['href']
-        self.log('- 获取打卡界面的url成功')
-        self.logger.info(' - 获取打卡界面的url成功')
+        self.log('获取打卡界面的url成功')
+        self.logger.info(' 获取打卡界面的url成功')
         return clickPageUrl
 
     def getClockUrl(self):
         """
         获取打卡url
-        :return:
         """
         clockPageUrl = self.getClockPageUrl()
         # 更新请求头Referer
@@ -137,8 +131,8 @@ class IspService:
         soup = BeautifulSoup(r.text, 'lxml')
         clockUrl = 'https://xsswzx.cdu.edu.cn/ispstu/com_user/' + soup.find(value='【一键登记：无变化】').parent['href']
         self.headers['Referer'] = clockPageUrl
-        self.log('- 获取打卡url成功')
-        self.logger.info(' - 获取打卡url成功')
+        self.log('获取打卡url成功')
+        self.logger.info(' 获取打卡url成功')
         return clockUrl
 
     def startClock(self):
@@ -146,51 +140,47 @@ class IspService:
         疫情打卡入口
         :return:
         """
-        self.log('- 开始疫情打卡')
-        self.logger.info(' - 疫情打卡成功')
+        self.log('开始疫情打卡')
+        self.logger.info(' 开始疫情打卡')
         clockUrl = self.getClockUrl()
         resp = requests.get(url=clockUrl, headers=self.headers)
         resp.encoding = 'utf-8'
         result = re.findall('提交成功', resp.text)
         if len(result) != 0:  # 疫情打卡成功
             self.error = ''
-            self.log('- 疫情打卡成功')
-            self.logger.info(' - 疫情打卡成功')
+            self.log('疫情打卡成功')
+            self.logger.info(' 疫情打卡成功')
             self.server()
         else:
             self.error = '疫情打卡失败'
-            self.log('- 疫情打卡失败')
-            self.logger.info(' - 疫情打卡失败')
+            self.log('疫情打卡失败')
+            self.logger.info(' 疫情打卡失败')
             self.server()
 
-    def log(self, text):
+    @staticmethod
+    def log(text):
         """
         打印日志
-        :param text:
-        :return:
         """
         time_stamp = datetime.datetime.now()
         print(time_stamp.strftime('%Y.%m.%d-%H:%M:%S') + '   ' + str(text))
-        self.time = time_stamp.strftime('%H:%M:%S')
-        self.list.append("- [" + self.time + "]  " + str(text) + "\n\n")
 
     def server(self):
         """
         Server酱推送
-        :return:
         """
-        if self.conf['sckey'] == '':
+        if self.sckey == '':
             return
-        url = 'https://sc.ftqq.com/' + self.conf['sckey'] + '.send'
-        self.diyText()  # 构造发送内容
-        response = requests.get(url, params={"text": self.title, "desp": self.content})
+        url = 'https://sc.ftqq.com/' + self.sckey + '.send'
+        title, content = self.diyText()  # 构造发送内容
+        response = requests.get(url, params={"text": title, "desp": content})
         data = json.loads(response.text)
         if data['errno'] == 0:
-            self.log('- 学号:' + self.conf['username'] + '  Server酱推送成功')
-            self.logger.info(' - 学号:' + self.conf['username'] + '  Server酱推送成功')
+            self.log('- 学号:' + self.username + '  Server酱推送成功')
+            self.logger.info('-学号:' + self.username + '  Server酱推送成功')
         else:
-            self.log('- 学号:' + self.conf['username'] + '  Server酱推送失败,请检查sckey是否正确')
-            self.logger.info(' - 学号:' + self.conf['username'] + '  Server酱推送失败,请检查sckey是否正确')
+            self.log('- 学号:' + self.username + '  Server酱推送失败,请检查sckey是否正确')
+            self.logger.info('- 学号:' + self.username + '  Server酱推送失败,请检查sckey是否正确')
 
     def diyText(self):
         """
@@ -200,41 +190,17 @@ class IspService:
         """
         if self.error == '':
             state = "打卡成功"
-            self.title = ("成都大学ISP打卡" + "----" + self.conf['username'])
+            title = ("成都大学ISP打卡" + "----" + self.username)
         else:
             state = self.error
-            self.title = 'isp-cdu疫情打卡异常，请自行登录网站打卡'
-        self.content = (
+            title = 'isp-cdu疫情打卡异常，请自行登录网站打卡'
+        content = (
                 "------\n"
                 "#### isp-cdu打卡信息\n"
-                "- 学号：" + str(self.conf['username']) + "\n"
+                "- 学号：" + str(self.username) + "\n"
                 "- 打卡状态：" + state + "\n"
                 "- isp-cdu疫情打卡脚本永久免费。请勿倒卖！！！" + "\n"
                 "- 脚本定制,期末项目代做(python,java,c),网课代看" + "\n"
                 "- 请联系ahao，VX：CSRF5XX" + "\n"
         )
-
-    def getConfig(self):
-        """
-        读取配置,配置文件为init.config
-        返回字典类型的配置对象
-        """
-        self.log('- 开始读取配置文件')
-        logging.info(' - 开始读取配置文件')
-        try:
-            config = ConfigParser()
-            config.read('init.config', encoding='UTF-8-sig')
-            username = config['token']['stuNum']
-            userpwd = config['token']['password']
-            sckey = config['setting']['sckey']
-        except:
-            self.log('- 配置文件读取失败')
-            self.logger.info(' - 配置文件读取失败')
-        self.log('- 配置文件读取完毕')
-        self.logger.info(' - 配置文件读取完毕, 学号：' + username)
-        conf = {
-            'username': username,
-            'userpwd': userpwd,
-            'sckey': sckey
-        }
-        return conf
+        return title, content
