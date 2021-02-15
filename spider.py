@@ -104,7 +104,9 @@ class IspService:
         logging.info(' - 获取Cookie成功')
 
     def getClockPageUrl(self):
-        """获取打卡界面的url"""
+        """
+        获取打卡界面的url
+        """
         self.getCookie()
         # 删除多余的请求头字段
         self.headers['Connection'] = 'keep-alive'
@@ -113,7 +115,8 @@ class IspService:
         self.headers.pop("Origin")
         url = "https://xsswzx.cdu.edu.cn/ispstu/com_user/left.asp"
         resp = requests.get(url=url, headers=self.headers, verify=False)
-        soup = BeautifulSoup(resp.content.decode("utf-8"), 'lxml')
+        resp.encoding = 'utf-8'
+        soup = BeautifulSoup(resp.text, 'lxml')
         clickPageUrl = 'https://xsswzx.cdu.edu.cn/ispstu/com_user/' + soup.find('a', string="疫情信息登记")['href']
         self.log('- 获取打卡界面的url成功')
         self.logger.info(' - 获取打卡界面的url成功')
@@ -129,7 +132,9 @@ class IspService:
         self.headers['Referer'] = 'https://xsswzx.cdu.edu.cn/ispstu/com_user/left.asp'
         self.headers.pop('Cache-Control')
         r = requests.get(url=clockPageUrl, headers=self.headers)
-        soup = BeautifulSoup(r.content.decode("utf-8"), 'lxml')
+        r.encoding = 'utf-8'  # 设置编码,
+        # 使用.text时 以encoding解析返回内容。字符串方式的响应体，会自动根据响应头部的字符编码进行解码
+        soup = BeautifulSoup(r.text, 'lxml')
         clockUrl = 'https://xsswzx.cdu.edu.cn/ispstu/com_user/' + soup.find(value='【一键登记：无变化】').parent['href']
         self.headers['Referer'] = clockPageUrl
         self.log('- 获取打卡url成功')
@@ -145,7 +150,8 @@ class IspService:
         self.logger.info(' - 疫情打卡成功')
         clockUrl = self.getClockUrl()
         resp = requests.get(url=clockUrl, headers=self.headers)
-        result = re.findall('提交成功', resp.content.decode('utf-8'))
+        resp.encoding = 'utf-8'
+        result = re.findall('提交成功', resp.text)
         if len(result) != 0:  # 疫情打卡成功
             self.error = ''
             self.log('- 疫情打卡成功')
