@@ -15,6 +15,3 @@ def main(event, content):
     isp-cdu疫情打开云函数版
     """
     InitIspConfig.taskPool()
-
-if __name__ == '__main__':
-    main(1,1)
